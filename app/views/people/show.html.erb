@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @person.name %>
+</p>
+
+<p>
+  <strong>Birth date:</strong>
+  <%= date_to_br(@person.birth_date) %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @person.email %>
+</p>
+
+<h2>Phones</h2>
+
+<ul>
+  <% @person.phones.each do |phone| %>
+    <li>
+      <%= link_to '[x]',  person_phone_path(@person, phone), data: { confirm: 'Are you sure?' }, method: :delete %>
+      <%= phone.number %>
+    </li>
+  <% end %>
+</ul>
+
+<a href="#" onclick="toggleForm()">
+  [+] Add phone
+</a>
+
+<fieldset id="phone_form" style="display: none">
+  <legend>Add new phone</legend>
+
+  <%= form_for([@person, @person.phones.build]) do |f| %>
+    <div class="field">
+      <%= f.label :number %>
+      <%= f.text_field :number %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+</fieldset>
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>
+
+<script type="text/javascript">
+  function toggleForm(){
+    obj = document.getElementById('phone_form');
+    if(obj.style.display == 'none'){
+      obj.style.display = 'block';
+    } else {
+      obj.style.display = 'none';
+    }
+  }
+</script>
